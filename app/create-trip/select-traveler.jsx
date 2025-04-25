@@ -1,6 +1,6 @@
-import { View, Text, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
-import { useNavigation } from 'expo-router'
+import { Link, useNavigation } from 'expo-router'
 import { Colors } from '../../constants/Colors'
 import { SelectTravelersList } from '../../constants/Options'
 import OptionsCard from '../../components/CreateTrip/OptionsCard'
@@ -30,6 +30,14 @@ export default function SelectTraveler() {
     console.log(tripData);
   },[tripData])
 
+  const onClickContinue = () => {
+        if (!selectedTraveler) {
+          Alert.alert('Incomplete Selection', 'Please select an option');
+          return;
+        }
+        navigation.navigate('create-trip/select-dates');
+      }  
+
    return (
      <View style={{
       padding:25,
@@ -58,26 +66,32 @@ export default function SelectTraveler() {
          style={{
           marginVertical:10
         }}>
-          <OptionsCard option={item} selectedTraveler={selectedTraveler}/>
+          <OptionsCard option={item} selectedOption={selectedTraveler}/>
         </TouchableOpacity>
        )}
        />
      </View>
-     <TouchableOpacity style={{
-      padding:15,
-      backgroundColor:Colors.PRIMARY,
-      borderRadius:15,
-      marginTop:20
-     }}>
-      <Text style={{
-        textAlign:'center',
-        color:Colors.WHITE,
-        fontFamily:'outfit-medium',
-        fontSize:20
-      }}>
-        Continue</Text>
 
-     </TouchableOpacity>
+    
+     <TouchableOpacity 
+  onPress={onClickContinue}
+  style={{
+    padding: 15,
+    backgroundColor: Colors.PRIMARY,
+    borderRadius: 15,
+    marginTop: 20,
+  }}
+>
+  <Text style={{
+    textAlign: 'center',
+    color: Colors.WHITE,
+    fontFamily: 'outfit-medium',
+    fontSize: 20,
+  }}>
+    Continue
+  </Text>
+</TouchableOpacity>
+
      </View>
    )
  }

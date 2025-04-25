@@ -28,4 +28,24 @@ export const SelectTravelersList = [
       people: '5-10 people',
     },
   ];
-  
+
+  export const SelectBudgetOptions = [
+    {
+      id: 1,
+      title: 'Cheap',
+      desc: 'Budget-friendly and practical',
+      icon: '💸',
+    },
+    {
+      id: 2,
+      title: 'Moderate',
+      desc: 'Balanced comfort and value',
+      icon: '💰',
+    },
+    {
+      id: 3,
+      title: 'Luxury',
+      desc: 'Premium stays and experiences',
+      icon: '💎',
+    },
+  ];
