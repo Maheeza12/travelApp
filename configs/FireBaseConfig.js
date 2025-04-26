@@ -1,25 +1,34 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { initializeAuth, getReactNativePersistence, getAuth } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getFirestore } from "firebase/firestore";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Your Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyBKaHFUeaXwCO2TwhuEFMfkPgfFuH9Yj60",
   authDomain: "travelapp-a51af.firebaseapp.com",
   projectId: "travelapp-a51af",
-  storageBucket: "travelapp-a51af.firebasestorage.app",
+  storageBucket: "travelapp-a51af.appspot.com", // fix: `.app` → `.appspot.com`
   messagingSenderId: "552133749407",
   appId: "1:552133749407:web:fc4960fcb32f67a1b450aa",
   measurementId: "G-35EB9FTGFW"
 };
 
-// Initialize Firebase
-export const app = initializeApp(firebaseConfig);
-export const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(AsyncStorage),
-});
+// Initialize Firebase App only once
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+
+// Initialize Auth only once
+let auth;
+try {
+  auth = getAuth(app);
+} catch (e) {
+  auth = initializeAuth(app, {
+    persistence: getReactNativePersistence(AsyncStorage),
+  });
+}
+
+// Firestore DB
+const db = getFirestore(app);
+
+// Export
+export { app, auth, db };

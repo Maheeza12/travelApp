@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useContext, useEffect } from 'react'
-import { useNavigation } from 'expo-router'
+import { useNavigation, useRouter } from 'expo-router'
 import { Colors } from '../../constants/Colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { CreateTripContext } from '../../context/CreateTripContext';
@@ -9,6 +9,8 @@ import moment from 'moment';
 export default function ReviewTrip() {
     const navigation=useNavigation();
     const {tripData,setTripData} = useContext(CreateTripContext);
+
+    const router=useRouter();
 
     useEffect(()=>{
         navigation.setOptions({
@@ -37,9 +39,9 @@ export default function ReviewTrip() {
         <View style={{
             marginTop:20,
             }}>
-            <Text style={{
+                <Text style={{
                 fontSize:20,
-                fontFamily:'outfit-medium',
+                fontFamily:'outfit-bold',
                 }}>Before generating your Trip, please review your selection:</Text>
 
                  {/* Destination Info */}
@@ -139,27 +141,23 @@ export default function ReviewTrip() {
                 </View>
 
     <TouchableOpacity
-           style={{
-                 padding:15,
-                 backgroundColor:Colors.PRIMARY,
-                 borderRadius:15,
-                 marginTop:80
-                }}>
-    
-                 <Text style={{
-                   textAlign:'center',
-                   color:Colors.WHITE,
-                   fontFamily:'outfit-medium',
-                   fontSize:20
-                 }}>
-                   Build My Trip</Text>
-           
+    onPress={()=>router.replace('/create-trip/generate-trip')}    
+    style={{
+        padding:15,
+        backgroundColor:Colors.PRIMARY,
+        borderRadius:15,
+        marginTop:80
+        }}>
+            <Text style={{
+                textAlign:'center',
+                color:Colors.WHITE,
+                fontFamily:'outfit-medium',
+                fontSize:20
+                }}>Build My Trip</Text>
                 </TouchableOpacity>
                 
-
                 </View>
-                        
-    </View>
+                </View>
     
   )
 }
